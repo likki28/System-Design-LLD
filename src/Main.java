@@ -9,8 +9,6 @@ public class Main {
 
 
 
-        EntryController entrycontroller=new EntryController(new SlotService());
 
-        entrycontroller.EnterVehicle("TS08GD5890", Vehicle.VehicleType.BIKE);
     }
 }

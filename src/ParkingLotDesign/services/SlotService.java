@@ -4,6 +4,8 @@ import ParkingLotDesign.Entities.ParkingSlot;
 import ParkingLotDesign.Entities.Vehicle;
 import ParkingLotDesign.repository.SlotRepository;
 
+import java.util.Optional;
+
 public class SlotService {
 
     private SlotRepository slotRepository;
