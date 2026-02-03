@@ -1,9 +1,11 @@
 package ParkingLotDesign.services;
 
-import ParkingLotDesign.Entities.Ticket;
-import ParkingLotDesign.Entities.Vehicle;
+import ParkingLotDesign.domain.Ticket;
+import ParkingLotDesign.domain.Vehicle;
+import ParkingLotDesign.domain.Ticket;
 import ParkingLotDesign.repository.TicketRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class TicketService {
@@ -26,5 +28,16 @@ public class TicketService {
 
 
 
+    }
+
+    public Optional<Ticket> getTicket(UUID ticketId) {
+        System.out.println("[SERVICE] Retrieving ticket: " + ticketId);
+
+        return ticketRepository.findById(ticketId);
+    }
+
+    public void deactivateTicket(UUID ticketId) {
+        System.out.println("[SERVICE] Deactivating ticket: " + ticketId);
+        ticketRepository.deactivateTicket(ticketId);
     }
 }

@@ -3,8 +3,8 @@ package ParkingLotDesign.repository;
 
 
 
-import ParkingLotDesign.Entities.ParkingSlot;
-import ParkingLotDesign.Entities.Vehicle;
+import ParkingLotDesign.domain.ParkingSlot;
+import ParkingLotDesign.domain.Vehicle;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package ParkingLotDesign.repository;
 
-import ParkingLotDesign.Entities.Ticket;
+import ParkingLotDesign.domain.Ticket;
 
 import java.util.*;
 import java.util.UUID;
@@ -12,5 +12,16 @@ public class TicketRepository {
     public Ticket save(Ticket ticket) {
         tickets.put(ticket.getId(), ticket);
         return ticket;
+    }
+
+    public Optional<Ticket> findById(UUID ticketId) {
+        return Optional.ofNullable(tickets.get(ticketId));
+    }
+
+    public void deactivateTicket(UUID ticketId) {
+        tickets.computeIfPresent(ticketId, (id, ticket) -> {
+            ticket.deactivate();
+            return ticket;
+        });
     }
 }

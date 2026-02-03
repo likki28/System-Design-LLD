@@ -1,10 +1,11 @@
 package ParkingLotDesign.services;
 
-import ParkingLotDesign.Entities.ParkingSlot;
-import ParkingLotDesign.Entities.Vehicle;
+import ParkingLotDesign.domain.ParkingSlot;
+import ParkingLotDesign.domain.Vehicle;
 import ParkingLotDesign.repository.SlotRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class SlotService {
 
@@ -26,7 +27,11 @@ public class SlotService {
 
         return slot;
     }
-
+    public void releaseSlot(UUID slotId) {
+        System.out.println("[SERVICE] Releasing slot: " + slotId);
+        slotRepository.releaseSlot(slotId);
+        System.out.println("[SERVICE] Slot released successfully: " + slotId);
+    }
 
 
 
