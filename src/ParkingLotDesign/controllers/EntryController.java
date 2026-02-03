@@ -24,22 +24,41 @@ public class EntryController {
     public EntryController(SlotService slotservice, TicketService ticketService) {
         this.slotservice = slotservice;
         this.ticketService = ticketService;
+        System.out.println("[CONTOLEER] EntryController initialized");
     }
 
     public EntryResult EnterVehicle(String licensePlate, Vehicle.VehicleType vehicleType){
 
-        Vehicle vehicle=new Vehicle(licensePlate,vehicleType);
+        System.out.println("[CONTROLLER] Vehicle entry request - License: " + licensePlate + ", Type: " + vehicleType);
 
 
-        Optional<UUID> slotId= slotservice.allocateSlot(vehicle.getVehicleType())
-                .map(slot -> slot.getId());
-        if (slotId.isEmpty()) {
-            return new EntryResult(false, null, null, "No available slots for vehicle type: " + vehicleType);
+
+        try{
+            Vehicle vehicle = new Vehicle(licensePlate, vehicleType);
+            System.out.println("[CONTROLLER] Vehicle created: " + vehicle.getId());
+
+            Optional<UUID> slotId= slotservice.allocateSlot(vehicleType)
+                    .map(slot->slot.getId());
+
+            if(slotId.isEmpty()){
+                return new EntryResult(false,null,null,"No available slots for vehicle type "+vehicleType);
+
+            }
+
+            Ticket ticket=ticketService.generateTicket(vehicle,slotId.get());
+
+            System.out.println("[CONTROLLER] Vehicle entry successful - Ticket: " + ticket.getId() + ", Slot: " + slotId.get());
+            return new EntryResult(true, ticket.getId(), slotId.get(), "Entry successful");
+
+        } catch (Exception e) {
+            System.out.println("[CONTROLLER] Vehicle entry failed: " + e.getMessage());
+            return new EntryResult(false, null, null, e.getMessage());
         }
 
-        Ticket ticket=ticketService.generateTicket(vehicle,slotId.get());
-        System.out.println("[CONTROLLER] Vehicle entry successful - Ticket: " + ticket.getId() + ", Slot: " + slotId.get());
-        return new EntryResult(true, ticket.getId(), slotId.get(), "Entry successful");
+
+
+
+
 
     }
 
